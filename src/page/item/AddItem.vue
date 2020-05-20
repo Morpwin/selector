@@ -43,11 +43,11 @@ export default {
   justify-content: center;
   align-items: center;
   .mask {
-    width: 50z0px;
-    height: 240px;
+    width: 25rem;
+    height: 12rem;
     background-color: #fff;
-    border-radius: 32px;
-    padding: 20px;
+    border-radius: 1.6rem;
+    padding: 1rem;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -59,21 +59,21 @@ export default {
         outline: none;
         border-bottom: 1px solid #eee;
         text-align: center;
-        font-size: 28px;
+        font-size: 1.4rem;
     }
     input:first-child{
-      margin-bottom: 20px;
+      margin-bottom: 1rem;
     }
     .btn {
-      margin-top: 20px;
+      margin-top: 1rem;
       display: flex;
       justify-content: space-around;
       button {
         background-color: rgba(255, 255, 255, 0);
         outline: none;
         border: 0;
-        padding: 10px;
-        font-size: 24px;
+        padding: 0.5rem;
+        font-size: 1.4rem;
       }
     }
   }

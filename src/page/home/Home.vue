@@ -1,8 +1,9 @@
 <template>
-    <div class="home">
-        <main>
-            <router-link tag="div" to="/result">抽取事件</router-link>
-            <router-link tag="div" to="/item">查看事件</router-link>
+    <div class="home" ref="home">
+        <div class="loading" v-if="!loading"><img src="../../assets/images/loading.png" alt=""></div>
+        <main v-if="loading">
+            <router-link tag="button" to="/result">抽取事件</router-link>
+            <router-link tag="button" to="/item">查看事件</router-link>
         </main>        
     </div>
 </template>
@@ -10,7 +11,22 @@
 <script>
 
 export default {
-    name: "Home"
+    name: "Home",
+    data() {
+        return {
+            loading: false
+        }
+    },
+    mounted() {
+        let home = this.$refs.home;
+        let img = new Image()
+        img.src = require("../../assets/images/bg.jpg");
+        img.onload = () => {
+            this.loading = true
+            home.style.background = 'url('+ img.src +') no-repeat 0 0 / 100% 100%'
+            
+        }
+    }
 }
 </script>
 
@@ -20,8 +36,6 @@ export default {
     height: 100%;
     display: flex;
     justify-content: center;
-    background: url("../../assets/images/bg.jpg") no-repeat;
-    background-size: 100% 100%;
     main {
         display: flex;
         justify-content: center;
@@ -29,15 +43,15 @@ export default {
         flex-direction: column;
         margin-bottom: 60%;
     }
-    main > div {
-        width: 200px;
-        border-radius: 16px;
+    main > button {
+        width: 10rem;
+        border-radius: 0.8rem;
         background-color: rgba(0, 0, 0, 0);
         border: 1px solid #eee;
         color: #fff;
-        margin-top: 40px;
+        margin-top: 2rem;
         text-align: center;
-        line-height: 100px;
+        line-height: 5rem;
     }
 }
 </style>

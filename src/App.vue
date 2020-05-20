@@ -27,9 +27,30 @@ export default {
 }
 
 </script>
-<style scoped>
+<style lang="less">
   #app {
     width: 100%;
     height: 100%;
+  }
+  #app .loading {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    img {
+      width: 100%;
+      height: 100%;
+      animation: loading 1s ease infinite;
+    }
+  }
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 </style>

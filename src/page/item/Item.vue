@@ -1,16 +1,17 @@
 <template>
-    <div class="item" v-cloak>
+    <div class="item" ref="item" >
+        <div class="loading" v-if="!loading"><img src="../../assets/images/loading.png" alt=""></div>
         <router-view></router-view>
         <router-link to="/" tag="span" class="exit"></router-link>
-        <transition-group tag="ul">
+        <transition-group tag="ul" v-if="loading">
             <li v-for="item of events" :key="item.id">
                 <h1>标题: {{item.tip}}</h1>
                 <p>内容: {{item.content}}</p>
                 <span @click="deleteItem(item.id)" v-if="showDelete" class="icon"></span>
             </li>
         </transition-group>
-        <button class="delete" @click="show()">-</button>
-        <router-link to="/item/addItem" tag="button" class="add">+</router-link>
+        <button class="delete" @click="show()" v-if="loading">-</button>
+        <router-link to="/item/addItem" tag="button" class="add" v-if="loading">+</router-link>
     </div>
 </template>
 
@@ -20,7 +21,8 @@ export default {
     data() {
         return {
             events: this.$store.state.events,
-            showDelete: false
+            showDelete: false,
+            loading: false
         };
     },
     created() {
@@ -32,6 +34,15 @@ export default {
                 this.showDelete = false;
             }
         });
+    },
+    mounted() {
+        let item = this.$refs.item
+        let img = new Image();
+        img.src = require("../../assets/images/bg3.jpg")
+        img.onload = () => {
+            this.loading = true
+            item.classList.add("bg")
+        }
     },
     methods: {
         deleteItem(id) {
@@ -45,6 +56,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.bg::before {
+    background: url("../../assets/images/bg3.jpg") no-repeat;
+    background-size: 100% 100%;
+}
 .v-enter,.v-leave-to {
     opacity: 0;
     transform: translateY(50px);
@@ -58,31 +73,29 @@ export default {
     opacity: 1;
 }
 .exit {
-    width: 64px;
-    height: 64px;
+    width: 3.2rem;
+    height: 3.2rem;
     background: url("../../assets/images/exit.png");
     background-size: 100% 100%;
     display: block;
-    margin-left: 40px;
-    margin-top: 20px;
+    margin-left: 2rem;
+    margin-top: 1rem;
 }
 .button {
-    width: 100px;
-    height: 100px;
-    line-height: 100px;
+    width: 5rem;
+    height: 5rem;
+    line-height: 5rem;
     text-align: center;
     position: fixed;
     border: 1px solid #eaeaea;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.52);
     color: rgba(0, 0, 0, 0.52);
-    font-size: 48px;
+    font-size: 2.4rem;
     outline: none;
 }
 .item::before {
     content: "";
-    background: url("../../assets/images/bg3.jpg") no-repeat;
-    background-size: 100% 100%;
     position: fixed;
     top: 0;
     left: 0;
@@ -93,9 +106,10 @@ export default {
 .item {
     width: 100%;
     height: 100%;
+    position: absolute;
     ul {
         width: 100%;
-        padding: 40px;
+        padding: 2rem;
         box-sizing: border-box;
         li {
             width: 100%;
@@ -105,12 +119,13 @@ export default {
             flex-direction: column;
             color: #000;
             background-color: rgba(255, 255, 255, 0.52);
-            margin-top: 40px;
-            border-radius: 16px;
-            padding: 20px;
+            margin-top: 2rem;
+            border-radius: .8rem;
+            padding: 1rem;
             box-sizing: border-box;
             position: relative;
-            font-size: 28px;
+            font-size: 1.4rem;
+            line-height: 2.4rem;
             h1 {
                 width: 100%;
                 overflow: hidden;
@@ -119,16 +134,16 @@ export default {
             }
             p {
                 width: 100%;
-                margin-top: 10px;
+                margin-top: .5rem;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
             span {
                 position: absolute;
-                right: 20px;
-                width: 64px;
-                height: 64px;
+                right: 1rem;
+                width: 3.2rem;
+                height: 3.2rem;
                 background: url("../../assets/images/delete.png") no-repeat;
                 background-size: 100% 100%;
             }

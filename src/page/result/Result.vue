@@ -1,6 +1,7 @@
 <template>
-    <div class="result">
-        <div class="content">
+    <div class="result" ref="result">
+        <div class="loading" v-if="!loading"><img src="../../assets/images/loading.png" alt="" ></div>
+        <div class="content" v-if="loading">
             <h1>{{tip}}</h1>
             <p>{{content}}</p>
             <button @click="reset()">不服，再抽</button>
@@ -19,6 +20,7 @@ export default {
             id: 0,
             tip: "",
             content: "",
+            loading: false
         }
     },
     computed: {
@@ -27,15 +29,24 @@ export default {
     mounted() {
         this.length = this.$store.state.events.length;
         this.reset();
+        let result = this.$refs.result;
+        let img = new Image();
+        img.src = require("../../assets/images/bg2.jpg")
+        img.onload = () => {
+            this.loading = true
+            result.style.background = 'url('+ img.src +') no-repeat 0 0 / 100% 100% fixed'
+        }
     },
     methods: {
         reset() {
+            
             let id = Math.floor(Math.random() * this.length + 1);
             if (this.id === id) {
                 this.reset();
             } else {
                 this.id = id;
             }
+            console.log(this.loading)
             this.tip = this.getEvents(this.id).tip;
             this.content = this.getEvents(this.id).content;
         }
@@ -55,33 +66,30 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: url("../../assets/images/bg2.jpg") no-repeat;
-    background-size: 100% 100%;
-    background-attachment: fixed;
 
     h1 {
-        font-size: zpx;
+        font-size: 3.2rem;
         font-weight: 400;
         color: #ecb419;
     }
     p {
-        font-size: 52px;
+        font-size: 2.6rem;
         color: #fff;
-        margin-top: 80px;
+        margin-top: 4rem;
     }
     button {
-        width: 200px;
+        width: 10rem;
         outline: none;
         border: 1px solid #fff;
-        border-radius: 8px;
+        border-radius: .4rem;
         background-color: rgba(0, 0, 0, 0);
         color: #fff;
-        margin-top: 60px;
-        font-size: 32px;
+        margin-top: 3rem;
+        font-size: 1.6rem;
         text-shadow: none;
         text-align: center;
-        line-height: 60px;
-        padding: 10px;
+        line-height: 3rem;
+        padding: .5rem;
     }
 }
 </style>
